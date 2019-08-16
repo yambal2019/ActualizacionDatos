@@ -154,7 +154,7 @@
                     <p> <label id="msg"></label></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default btn-color" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default btn-color btn-cerrar" data-dismiss="modal">Close</button>
 
                 </div>
             </div>
@@ -216,7 +216,13 @@
         }
     });
 
+            //-----------------------------------
 
+            $(".btn-cerrar").click(function () {
+                  var url = '@Url.Action("Inicio", "ActualizaTusDatos")';
+                  window.location.href = url;
+
+            });
 
         });
 
@@ -240,7 +246,7 @@
                     contentType: "application/json; charset=utf-8",
                     datatype: "json",
                     data: JSON.stringify(consultoraModel),
-                    success: function (result) {             
+                    success: function (result) {
                         $('#msg').html(result.texto);
 
                         if (result.Exito = 1) {

@@ -13,7 +13,7 @@ namespace UniqueActualizacionDatos.Controllers
         [HttpGet]
         public ActionResult Inicio()
         {
-          
+            Session["Model"] = null;
             ConsultoraModel obj = new ConsultoraModel();
 
             obj.ListaTipoDocumento = ListaTipoDocumento();
@@ -54,7 +54,14 @@ namespace UniqueActualizacionDatos.Controllers
         [HttpGet]
         public ActionResult Datos()
         {
-            ConsultoraModel obj = new ConsultoraModel();
+          //  ConsultoraModel obj = new ConsultoraModel();
+            ConsultoraModel obj = (ConsultoraModel)Session["Model"];
+            if (obj==null)
+            {
+             
+
+                return RedirectToAction("Inicio", "ActualizaTusDatos");
+            }
 
             return View(obj);
         }
@@ -63,59 +70,58 @@ namespace UniqueActualizacionDatos.Controllers
         public async Task<JsonResult> ProcesarDatosAsync(ConsultoraModel objModel)
         {
             ConsultoraModel objMemoria = (ConsultoraModel)Session["Model"];
-
+            objMemoria.Exito = 1;
             try
             {
 
-          
-            
-            if (ModelState.IsValid)
 
-            {
+                if (ModelState.IsValid)
 
-                objMemoria.vchEmail = objModel.vchEmail;
-                objMemoria.vchTelefono = objModel.vchTelefono;
-
-                if (objModel.vchEmail != null)
                 {
-                    objMemoria.texto = Helper.TextoBD("MENSAJE_POPUP_EMAIL_SMS");
-                }
-                else
-                {
-                    objMemoria.texto = Helper.TextoBD("MENSAJE_POPUP_SMS");
-                }
 
-                //*******************************************************************
+                    objMemoria.vchEmail = objModel.vchEmail;
+                    objMemoria.vchTelefono = objModel.vchTelefono;
 
-                DatoModel objDatoModel = new DatoModel();
-                objDatoModel.idTipoDocumento = objMemoria.TipoDocumentoId;
-                objDatoModel.vchDato = objMemoria.vchDato;
-                objDatoModel.vchEmail = objModel.vchEmail;
-                objDatoModel.vchTelefono = objModel.vchTelefono;
-                objDatoModel.bitEnviado = true;
-                objDatoModel.dtmFechaEnvio = DateTime.Now;
-                objDatoModel.vchCodConsultora = objMemoria.vchCodConsultora;
-                objDatoModel.vchEstado = "1";
-                objDatoModel.idPromocion = 1;
-                DAODato.Add(ref objDatoModel);
-                //*******************************************************************
+                    if (objModel.vchEmail != null)
+                    {
+                        objMemoria.texto = Helper.TextoBD("MENSAJE_POPUP_EMAIL_SMS");
+                    }
+                    else
+                    {
+                        objMemoria.texto = Helper.TextoBD("MENSAJE_POPUP_SMS");
+                    }
 
-                objMemoria.intDato = objDatoModel.idDato;
-                objMemoria.Exito = 1;
-                objMemoria.vchEncriptadoSMS = Helper.Encrypt(objMemoria.intDato + "," + "1" + "," + objMemoria.vchCodConsultora + "," + 1);
-                objMemoria.vchEncriptadoEmail = Helper.Encrypt(objMemoria.intDato + "," + "2" + "," + objMemoria.vchCodConsultora + "," + 1);
+                    //*******************************************************************
 
-                await Helper.EnvioSMSAsync(objMemoria);
-               // Helper.EnvioSMSAsync(objMemoria);
-                 
-                if (objModel.vchEmail != null)
-                {
-                    objMemoria.vchRuta = Server.MapPath("~/Views/HtmlTemplates/HPRespuestaPedido.html");
-                    Helper.EnvioEmail(objMemoria);
-                }
+                    DatoModel objDatoModel = new DatoModel();
+                    objDatoModel.idTipoDocumento = objMemoria.TipoDocumentoId;
+                    objDatoModel.vchDato = objMemoria.vchDato;
+                    objDatoModel.vchEmail = objModel.vchEmail;
+                    objDatoModel.vchTelefono = objModel.vchTelefono;
+                    objDatoModel.bitEnviado = true;
+                    objDatoModel.dtmFechaEnvio = DateTime.Now;
+                    objDatoModel.vchCodConsultora = objMemoria.vchCodConsultora;
+                    objDatoModel.vchEstado = "1";
+                    objDatoModel.idPromocion = 1;
+                    DAODato.Add(ref objDatoModel);
+                    //*******************************************************************
+
+                    objMemoria.intDato = objDatoModel.idDato;
+                    objMemoria.Exito = 1;
+                    objMemoria.vchEncriptadoSMS = Helper.Encrypt(objMemoria.intDato + "," + "1" + "," + objMemoria.vchCodConsultora + "," + 1);
+                    objMemoria.vchEncriptadoEmail = Helper.Encrypt(objMemoria.intDato + "," + "2" + "," + objMemoria.vchCodConsultora + "," + 1);
+
+                    await Helper.EnvioSMSAsync(objMemoria);
+                    // Helper.EnvioSMSAsync(objMemoria);
+
+                    if (objModel.vchEmail != null)
+                    {
+                        objMemoria.vchRuta = Server.MapPath("~/Views/HtmlTemplates/HPRespuestaPedido.html");
+                        Helper.EnvioEmail(objMemoria);
+                    }
 
 
-                return Json(objMemoria, JsonRequestBehavior.AllowGet);
+                    return Json(objMemoria, JsonRequestBehavior.AllowGet);
             }
             else
             {
