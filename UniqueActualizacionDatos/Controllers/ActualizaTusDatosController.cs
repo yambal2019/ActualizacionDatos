@@ -103,13 +103,13 @@ namespace UniqueActualizacionDatos.Controllers
                     objDatoModel.vchCodConsultora = objMemoria.vchCodConsultora;
                     objDatoModel.vchEstado = "1";
                     objDatoModel.idPromocion = 1;
-                    DAODato.Add(ref objDatoModel);
+                     DAODato.Add(ref objDatoModel);
                     //*******************************************************************
 
                     objMemoria.intDato = objDatoModel.idDato;
                     objMemoria.Exito = 1;
-                    objMemoria.vchEncriptadoSMS = Helper.Encrypt(objMemoria.intDato + "," + "1" + "," + objMemoria.vchCodConsultora + "," + 1);
-                    objMemoria.vchEncriptadoEmail = Helper.Encrypt(objMemoria.intDato + "," + "2" + "," + objMemoria.vchCodConsultora + "," + 1);
+                    objMemoria.vchEncriptadoSMS = Encriptacion.Base64Encode(objMemoria.intDato + "," + "1" + "," + objMemoria.vchCodConsultora + "," + 1);
+                    objMemoria.vchEncriptadoEmail = Encriptacion.Base64Encode(objMemoria.intDato + "," + "2" + "," + objMemoria.vchCodConsultora + "," + 1);
 
                     await Helper.EnvioSMSAsync(objMemoria);
                     // Helper.EnvioSMSAsync(objMemoria);

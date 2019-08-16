@@ -142,6 +142,7 @@
     <Compile Include="Models\ParametroModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\CustomExceptionHandling.cs" />
+    <Compile Include="Utilities\Encriptacion.cs" />
     <Compile Include="Utilities\Log.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using UniqueActualizacionDatos.Data;
 using UniqueActualizacionDatos.Models;
+using UniqueActualizacionDatos.Utilities;
 
 namespace UniqueActualizacionDatos.Controllers
 {
@@ -16,7 +17,7 @@ namespace UniqueActualizacionDatos.Controllers
 
             //string parametro = (string)RouteData.Values["id"];
             string parametro = Convert.ToString(codigo);
-            String Clave = Helper.Decrypt(parametro);
+            String Clave = Encriptacion.Base64Decode(parametro);
             string[] lista = Clave.Split(',');
             DatoModel objModel = new DatoModel();
             objModel.idDato =Convert.ToInt32( lista[0]);

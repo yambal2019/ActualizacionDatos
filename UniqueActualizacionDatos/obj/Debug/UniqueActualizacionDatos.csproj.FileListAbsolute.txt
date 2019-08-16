@@ -62,3 +62,4 @@ D:\Proyectos2019\Proyecto Actualizacion de Datos\01Desarrollo\ActualizacionDatos
 D:\Proyectos2019\Proyecto Actualizacion de Datos\01Desarrollo\ActualizacionDatos\UniqueActualizacionDatos\obj\Debug\UniqueActualizacionDatos.csproj.CopyComplete
 D:\Proyectos2019\Proyecto Actualizacion de Datos\01Desarrollo\ActualizacionDatos\UniqueActualizacionDatos\obj\Debug\UniqueActualizacionDatos.dll
 D:\Proyectos2019\Proyecto Actualizacion de Datos\01Desarrollo\ActualizacionDatos\UniqueActualizacionDatos\obj\Debug\UniqueActualizacionDatos.pdb
+D:\Proyectos2019\Proyecto Actualizacion de Datos\01Desarrollo\ActualizacionDatos\UniqueActualizacionDatos\obj\Debug\UniqueActualizacionDatos.csprojAssemblyReference.cache

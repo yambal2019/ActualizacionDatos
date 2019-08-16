@@ -20,7 +20,8 @@ namespace UniqueActualizacionDatos.Data
 {
     public class Helper
     {
-        static string key { get; set; } = "A!9HHhi%XjjYY4YP2@Nob009X";
+        //static string key { get; set; } = "A!9HHhi%XjjYY4YP2@Nob009X";
+        static string key { get; set; } = "123456789abcdefg";
 
         public static string Encrypt(string text)
         {
