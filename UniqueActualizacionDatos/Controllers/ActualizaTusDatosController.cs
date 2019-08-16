@@ -60,7 +60,7 @@ namespace UniqueActualizacionDatos.Controllers
         }
 
         [HttpPost]
-        public JsonResult ProcesarDatos(ConsultoraModel objModel)
+        public async Task<JsonResult> ProcesarDatosAsync(ConsultoraModel objModel)
         {
             ConsultoraModel objMemoria = (ConsultoraModel)Session["Model"];
 
@@ -105,13 +105,12 @@ namespace UniqueActualizacionDatos.Controllers
                 objMemoria.vchEncriptadoSMS = Helper.Encrypt(objMemoria.intDato + "," + "1" + "," + objMemoria.vchCodConsultora + "," + 1);
                 objMemoria.vchEncriptadoEmail = Helper.Encrypt(objMemoria.intDato + "," + "2" + "," + objMemoria.vchCodConsultora + "," + 1);
 
-                //await Helper.EnvioSMSAsync(objMemoria);
-                Helper.EnvioSMSAsync(objMemoria);
+                await Helper.EnvioSMSAsync(objMemoria);
+               // Helper.EnvioSMSAsync(objMemoria);
                  
                 if (objModel.vchEmail != null)
                 {
                     objMemoria.vchRuta = Server.MapPath("~/Views/HtmlTemplates/HPRespuestaPedido.html");
-                   // objMemoria.vchRuta = System.Web.HttpContext.Current.Server.MapPath("~/Views/HtmlTemplates/HPRespuestaPedido.html");
                     Helper.EnvioEmail(objMemoria);
                 }
 

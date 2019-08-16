@@ -14,10 +14,18 @@ namespace UniqueActualizacionDatos
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+            name: "ConfirmacionDatos",
+            url: "ConfirmacionDatos/{codigo}",
+            defaults: new { controller = "ConfirmacionDatos", action = "Detalle" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "ActualizaTusDatos", action = "Inicio", id = UrlParameter.Optional }
             );
+
+
         }
     }
 }

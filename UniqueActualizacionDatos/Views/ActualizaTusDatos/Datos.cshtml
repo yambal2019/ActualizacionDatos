@@ -236,7 +236,7 @@
                 var options = { "backdrop": "static", keyboard: true };
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("ProcesarDatos", "ActualizaTusDatos")',
+                    url: '@Url.Action("ProcesarDatosAsync", "ActualizaTusDatos")',
                     contentType: "application/json; charset=utf-8",
                     datatype: "json",
                     data: JSON.stringify(consultoraModel),

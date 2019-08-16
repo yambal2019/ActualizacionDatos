@@ -147,131 +147,70 @@ namespace UniqueActualizacionDatos.Data
         }
 
 
-        //public static async System.Threading.Tasks.Task EnvioSMSAsync(ConsultoraModel objModel)
-        //{
-        //    List<ParametroModel> objListaParametro = ListaBD("SMS_CONFIGURACION");
-
-        //    //try
-        //    //{
-        //    string BASE_URL = objListaParametro[0].vchValor;
-
-        //    string USERNAME = objListaParametro[1].vchValor;
-        //    string PASSWORD = objListaParametro[2].vchValor;
-
-        //    //BasicAuthConfiguration BASIC_AUTH_CONFIGURATION = new BasicAuthConfiguration(BASE_URL, USERNAME, PASSWORD);
-
-        //    //string FROM = "InfoSMS";
-        //    //string TO = "+51" + objModel.vchTelefono;
-        //    //List<string> TO_LIST = new List<string>(1) { "PHONE" };
-
-        //    //string MESSAGE_TEXT = objListaParametro[3].vchValor + "  " + DateTime.Now.ToString() + " " + Helper.TextoBD("SMS_LINK") + objModel.vchEncriptadoSMS;
-
-        //    //SendMultipleTextualSmsAdvanced smsClient = new SendMultipleTextualSmsAdvanced(BASIC_AUTH_CONFIGURATION);
-
-        //    //Destination destination = new Destination
-        //    //{
-        //    //    To = TO
-        //    //};
-
-        //    //Message message = new Message
-        //    //{
-        //    //    From = FROM,
-        //    //    Destinations = new List<Destination>(1) { destination },
-        //    //    Text = MESSAGE_TEXT
-        //    //};
-
-        //    //SMSAdvancedTextualRequest request = new SMSAdvancedTextualRequest
-        //    //{
-        //    //    Messages = new List<Message>(1) { message }
-        //    //};
-
-
-
-        //    //SMSResponse smsResponse = await smsClient.ExecuteAsync(request);
-        //    //SMSResponseDetails sentMessageInfo = smsResponse.Messages[0];
-
-        //    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-
-        //    try
-        //    {
-        //        var client = new RestClient("https://mrxqw.api.infobip.com/sms/2/text/single");
-
-        //        var request = new RestRequest(Method.POST);
-        //        request.AddHeader("accept", "application/json");
-        //        request.AddHeader("content-type", "application/json");
-        //        request.AddHeader("authorization", "Basic VU5JUVVFX1lBTkJBTDpVbmlxdWUuMjAxOQ==");
-        //        request.AddParameter("application/json", "{\"from\":\"InfoSMS\", \"to\":\"+51929867768\",\"text\":\"Test SMS.\"}", ParameterType.RequestBody);
-
-        //        IRestResponse response = client.Execute(request);
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        throw;
-        //    }
-
-
-
-        //    //}
-        //    //catch (Exception ex)
-        //    //{
-
-
-        //    //}
-
-
-        //}
-
-
-
-
-        public static void EnvioSMSAsync(ConsultoraModel objModel)
+        public static async System.Threading.Tasks.Task EnvioSMSAsync(ConsultoraModel objModel)
         {
             List<ParametroModel> objListaParametro = ListaBD("SMS_CONFIGURACION");
 
             //try
             //{
-                string BASE_URL = objListaParametro[0].vchValor;
+            string BASE_URL = objListaParametro[0].vchValor;
 
-                string USERNAME = objListaParametro[1].vchValor;
-                string PASSWORD = objListaParametro[2].vchValor;
-                 string FROM = "InfoSMS";
+            string USERNAME = objListaParametro[1].vchValor;
+            string PASSWORD = objListaParametro[2].vchValor;
+
+            BasicAuthConfiguration BASIC_AUTH_CONFIGURATION = new BasicAuthConfiguration(BASE_URL, USERNAME, PASSWORD);
+
+            string FROM = "InfoSMS";
+            string TO = "+51" + objModel.vchTelefono;
+            List<string> TO_LIST = new List<string>(1) { "PHONE" };
+
+            string MESSAGE_TEXT = objListaParametro[3].vchValor + "  " + DateTime.Now.ToString() + " " + Helper.TextoBD("SMS_LINK") + objModel.vchEncriptadoSMS;
+
+            SendMultipleTextualSmsAdvanced smsClient = new SendMultipleTextualSmsAdvanced(BASIC_AUTH_CONFIGURATION);
+
+            Destination destination = new Destination
+            {
+                To = TO
+            };
+
+            Message message = new Message
+            {
+                From = FROM,
+                Destinations = new List<Destination>(1) { destination },
+                Text = MESSAGE_TEXT
+            };
+
+            SMSAdvancedTextualRequest request = new SMSAdvancedTextualRequest
+            {
+                Messages = new List<Message>(1) { message }
+            };
+
+
+
+            SMSResponse smsResponse = await smsClient.ExecuteAsync(request);
+            SMSResponseDetails sentMessageInfo = smsResponse.Messages[0];
 
             //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-            try
-            {
-                var client = new RestClient("https://mrxqw.api.infobip.com/sms/2/text/single");
+            //try
+            //{
+            //    var client = new RestClient("https://mrxqw.api.infobip.com/sms/2/text/single");
 
-              
-                string TO = "+51" + objModel.vchTelefono;
-            
-                string MESSAGE_TEXT = objListaParametro[3].vchValor + "  " + DateTime.Now.ToString() + " " + Helper.TextoBD("SMS_LINK") + objModel.vchEncriptadoSMS;
+            //    var request = new RestRequest(Method.POST);
+            //    request.AddHeader("accept", "application/json");
+            //    request.AddHeader("content-type", "application/json");
+            //    request.AddHeader("authorization", "Basic VU5JUVVFX1lBTkJBTDpVbmlxdWUuMjAxOQ==");
+            //    request.AddParameter("application/json", "{\"from\":\"InfoSMS\", \"to\":\"+51929867768\",\"text\":\"Test SMS.\"}", ParameterType.RequestBody);
 
-                var model = new Envio
-                {
-                    from= FROM,
-                    to = TO,
-                    text = MESSAGE_TEXT
-                };
+            //    IRestResponse response = client.Execute(request);
+            //}
+            //catch (Exception ex)
+            //{
 
+            //    throw;
+            //}
 
-                var request = new RestRequest(Method.POST);
-                request.AddHeader("accept", "application/json");
-                request.AddHeader("content-type", "application/json");
-                request.AddHeader("authorization", "Basic VU5JUVVFX1lBTkJBTDpVbmlxdWUuMjAxOQ==");
-                request.AddParameter("application/json", Newtonsoft.Json.JsonConvert.SerializeObject(model), ParameterType.RequestBody);
-
-                IRestResponse response = client.Execute(request);
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-            
 
 
             //}
@@ -283,12 +222,73 @@ namespace UniqueActualizacionDatos.Data
 
 
         }
-    }
-    public class Envio
-    {
-        public string from { get; set; }
-        public string to { get; set; }
-        public string text { get; set; }
+
+
+
+
+    //    public static void EnvioSMSAsync(ConsultoraModel objModel)
+    //    {
+    //        List<ParametroModel> objListaParametro = ListaBD("SMS_CONFIGURACION");
+
+    //        //try
+    //        //{
+    //            string BASE_URL = objListaParametro[0].vchValor;
+
+    //            string USERNAME = objListaParametro[1].vchValor;
+    //            string PASSWORD = objListaParametro[2].vchValor;
+    //             string FROM = "InfoSMS";
+
+    //        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+    //        try
+    //        {
+    //            var client = new RestClient("https://mrxqw.api.infobip.com/sms/2/text/single");
+
+              
+    //            string TO = "+51" + objModel.vchTelefono;
+            
+    //            string MESSAGE_TEXT = objListaParametro[3].vchValor + "  " + DateTime.Now.ToString() + " " + Helper.TextoBD("SMS_LINK") + objModel.vchEncriptadoSMS;
+
+    //            var model = new Envio
+    //            {
+    //                from= FROM,
+    //                to = TO,
+    //                text = MESSAGE_TEXT
+    //            };
+
+
+    //            var request = new RestRequest(Method.POST);
+    //            request.AddHeader("accept", "application/json");
+    //            request.AddHeader("content-type", "application/json");
+    //            request.AddHeader("authorization", "Basic VU5JUVVFX1lBTkJBTDpVbmlxdWUuMjAxOQ==");
+    //            request.AddParameter("application/json", Newtonsoft.Json.JsonConvert.SerializeObject(model), ParameterType.RequestBody);
+
+    //            IRestResponse response = client.Execute(request);
+    //        }
+    //        catch (Exception ex)
+    //        {
+
+    //            throw;
+    //        }
+            
+
+
+    //        //}
+    //        //catch (Exception ex)
+    //        //{
+
+
+    //        //}
+
+
+    //    }
+    //}
+    //public class Envio
+    //{
+    //    public string from { get; set; }
+    //    public string to { get; set; }
+    //    public string text { get; set; }
         
     }
 
