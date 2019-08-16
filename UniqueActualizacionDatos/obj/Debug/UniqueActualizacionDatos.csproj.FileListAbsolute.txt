@@ -1,0 +1,2 @@
+D:\ProyectoActualizacionDatos\1.Desarrollo\Version01\UniqueActualizacionDatos\UniqueActualizacionDatos\obj\Debug\UniqueActualizacionDatos.csprojAssemblyReference.cache
+D:\ProyectoActualizacionDatos\1.Desarrollo\Version01\UniqueActualizacionDatos\UniqueActualizacionDatos\obj\Debug\UniqueActualizacionDatos.csproj.CoreCompileInputs.cache
